@@ -40,7 +40,6 @@ router.post("/", (req, res, next) => {
     newUser.save((err, user) => {
       if (err) {
         res.status(500).json({ message: err.message, err });
-        console.log("error in save new user...", newUser);
       } else {
         res
           .status(200)
@@ -56,7 +55,23 @@ router.post("/", (req, res, next) => {
 
 /* DELETE a user. */
 router.delete("/", (req, res, next) => {
-  res.send("respond with a resource");
+  const { username } = req.body;
+  try {
+    User.findByIdAndDelete(username, (err, user) => {
+      if (err) {
+        res.status(500).json({ message: err.message, err });
+      } else {
+        res
+          .status(200)
+          .json({ message: `User ${user.username} has been deleted` });
+      }
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: "DELETE /api/users - .findByIdAndDelete() had an error...",
+      error
+    });
+  }
 });
 
 module.exports = router;
