@@ -3,9 +3,10 @@ var Schema = mongoose.Schema;
 
 const userSchema = new Schema({
   _id: { type: String, required: true },
+  username: { type: String, required: true },
   name: { type: String, required: true },
   avatarURL: { type: String, required: false },
-  answers: { type: {}, required: true },
+  answers: { type: {}, required: true, default: {} },
   questions: { type: [String] }
 });
 
