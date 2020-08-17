@@ -51,15 +51,30 @@ router.post("/", (req, res, next) => {
       }
     });
   } catch (error) {
-    res
-      .status(400)
-      .json({ message: "GET /api/questions - .save() had an error...", error });
+    res.status(400).json({
+      message: "POST /api/questions - .save() had an error...",
+      error
+    });
   }
 });
 
 /* DELETE a question listing. */
 router.delete("/", (req, res, next) => {
-  res.send("respond with a resource");
+  const { id } = req.body;
+  try {
+    Question.findByIdAndDelete(id, (err, question) => {
+      if (err) {
+        res.status(500).json({ message: err.message, err });
+      } else {
+        res.status(200).json({ message: `deleted question ${id}`, question });
+      }
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: "DELETE /api/questions - .findByIdAndDelete() had an error...",
+      error
+    });
+  }
 });
 
 module.exports = router;
