@@ -10,7 +10,11 @@ router.get("/", (req, res, next) => {
       if (err) {
         res.status(500).json({ message: err.message, err });
       } else {
-        res.status(200).json({ users: Object.assign({}, users) });
+        let usersObj = {};
+        users.forEach((user) => {
+          usersObj[user.username] = user;
+        });
+        res.status(200).json({ users: usersObj });
       }
     });
   } catch (error) {
