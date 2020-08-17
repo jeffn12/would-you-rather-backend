@@ -19,7 +19,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 var db = mongoose.connection;
 
-console.log(db);
+//console.log(db);
 
 app.use(logger("dev"));
 app.use(express.json());
