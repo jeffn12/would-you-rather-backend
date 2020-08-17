@@ -8,3 +8,5 @@ const userSchema = new Schema({
   answers: { type: {}, required: true },
   questions: { type: [String] }
 });
+
+export default mongoose.model("User", userSchema);
