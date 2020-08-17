@@ -2,7 +2,6 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 const questionSchema = new Schema({
-  _id: { type: String, required: true },
   author: { type: String, required: true },
   timestamp: { type: Number, required: true },
   optionOne: {
