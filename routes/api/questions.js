@@ -27,17 +27,17 @@ router.get("/", (req, res, next) => {
 
 /* POST a question. */
 router.post("/", (req, res, next) => {
-  const { author, optionOne, optionTwo } = req.body;
+  const { author, optionOneText, optionTwoText } = req.body;
   const newQuestion = new Question({
     author,
     timestamp: new Date().getTime(),
     optionOne: {
       votes: [],
-      text: optionOne
+      text: optionOneText
     },
     optionTwo: {
       votes: [],
-      text: optionTwo
+      text: optionTwoText
     }
   });
   try {
