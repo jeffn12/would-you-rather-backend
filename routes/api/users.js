@@ -54,7 +54,6 @@ router.post("/", (req, res, next) => {
 // Add the question id/answer to the user's answers array
 router.put("/", (req, res, next) => {
   const { questionId, option, authedUser } = req.body;
-
   try {
     User.findByIdAndUpdate(
       { _id: authedUser },
@@ -65,7 +64,6 @@ router.put("/", (req, res, next) => {
       },
       { new: true, useFindAndModify: false },
       (err, user) => {
-        console.log(user);
         if (err) {
           res.status(500).json({
             message: "PUT /api/users server error...",
