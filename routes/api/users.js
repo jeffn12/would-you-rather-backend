@@ -32,7 +32,7 @@ router.post("/", (req, res, next) => {
     username,
     name,
     avatarURL: avatarURL ? avatarURL : "",
-    answers: {},
+    answers: [],
     questions: []
   });
 

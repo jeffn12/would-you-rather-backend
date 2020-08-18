@@ -6,7 +6,7 @@ const userSchema = new Schema({
   username: { type: String, required: true },
   name: { type: String, required: true },
   avatarURL: { type: String, required: false },
-  answers: { type: {}, required: true, default: {} },
+  answers: { type: [], required: true, default: {} },
   questions: { type: [String] }
 });
 
