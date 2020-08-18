@@ -41,9 +41,7 @@ router.post("/", (req, res, next) => {
       if (err) {
         res.status(500).json({ message: err.message, err });
       } else {
-        res
-          .status(200)
-          .json({ message: `User ${user.username} has been created` });
+        res.status(200).json({ user });
       }
     });
   } catch (error) {
