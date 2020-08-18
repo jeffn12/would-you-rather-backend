@@ -45,9 +45,7 @@ router.post("/", (req, res, next) => {
       if (err) {
         res.status(500).json({ message: err.message, err });
       } else {
-        res
-          .status(200)
-          .json({ message: `question saved: ${question._id}`, question });
+        res.status(200).json({ question });
       }
     });
   } catch (error) {
