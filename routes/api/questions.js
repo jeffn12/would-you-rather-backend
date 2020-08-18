@@ -56,6 +56,38 @@ router.post("/", (req, res, next) => {
   }
 });
 
+// Add the user who answered the question to the options
+router.put("/", (req, res, next) => {
+  const { id, option, authedUser } = req.body;
+  const pathToUpdate = `${option}.votes`;
+  try {
+    Question.findByIdAndUpdate(
+      { _id: id },
+      {
+        $push: {
+          [`${option}.votes`]: authedUser
+        }
+      },
+      { new: true, useFindAndModify: false },
+      (err, question) => {
+        if (err) {
+          res.status(500).json({
+            message: "PUT /api/questions server error...",
+            error
+          });
+        } else {
+          res.status(200).json(question);
+        }
+      }
+    );
+  } catch (error) {
+    res.status(400).json({
+      message: "PUT /api/questions had an error...",
+      error: error.message
+    });
+  }
+});
+
 /* DELETE a question listing. */
 router.delete("/", (req, res, next) => {
   const { id } = req.body;
