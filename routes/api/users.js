@@ -51,6 +51,39 @@ router.post("/", (req, res, next) => {
   }
 });
 
+// Add the question id/answer to the user's answers array
+router.put("/", (req, res, next) => {
+  const { questionId, option, authedUser } = req.body;
+
+  try {
+    User.findByIdAndUpdate(
+      { _id: authedUser },
+      {
+        $push: {
+          answers: { [questionId]: option }
+        }
+      },
+      { new: true, useFindAndModify: false },
+      (err, user) => {
+        console.log(user);
+        if (err) {
+          res.status(500).json({
+            message: "PUT /api/users server error...",
+            error: err.message
+          });
+        } else {
+          res.status(200).json(user);
+        }
+      }
+    );
+  } catch (error) {
+    res.status(400).json({
+      message: "PUT /api/users had an error...",
+      error: error.message
+    });
+  }
+});
+
 /* DELETE a user. */
 router.delete("/", (req, res, next) => {
   const { username } = req.body;
