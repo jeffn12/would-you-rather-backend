@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 
 const Question = require("../../models/question");
+const User = require("../../models/user");
 
 /* GET questions listings. */
 router.get("/", (req, res, next) => {
@@ -45,7 +46,27 @@ router.post("/", (req, res, next) => {
       if (err) {
         res.status(500).json({ message: err.message, err });
       } else {
-        res.status(200).json({ question });
+        User.findByIdAndUpdate(
+          { _id: author },
+          {
+            $push: {
+              questions: question._id
+            }
+          },
+          { new: true, useFindAndModify: false },
+          (err) => {
+            if (err) {
+              res.status(500).json({ message: err.message, err });
+              Question.findByIdAndDelete(question._id, (err) => {
+                res
+                  .status(500)
+                  .json({ message: "houston, we have a problem..." });
+              });
+            } else {
+              res.status(200).json({ question });
+            }
+          }
+        );
       }
     });
   } catch (error) {
