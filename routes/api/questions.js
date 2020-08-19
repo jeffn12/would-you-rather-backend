@@ -80,7 +80,6 @@ router.post("/", (req, res, next) => {
 // Add the user who answered the question to the options
 router.put("/", (req, res, next) => {
   const { id, option, authedUser } = req.body;
-  const pathToUpdate = `${option}.votes`;
   try {
     Question.findByIdAndUpdate(
       { _id: id },
